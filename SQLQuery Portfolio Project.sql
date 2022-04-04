@@ -84,7 +84,8 @@ order by 1,2
 
 --Looking at Total Population vs Vaccinations
 
-Select Death.continent, Death.location, Death.Date, Death.population, Vac.new_vaccinations, SUM(CONVERT(bigint, Vac.new_vaccinations)) OVER (Partition by death.location order by Death.location, Death.date) 
+Select Death.continent, Death.location, Death.Date, Death.population, Vac.new_vaccinations, 
+SUM(CONVERT(bigint, Vac.new_vaccinations)) OVER (Partition by death.location order by Death.location, Death.date) 
 as RollingPeopleVaccinated,
 From PortfolioProject..CovidDeaths Death
 JOIN PortfolioProject..CovidVaccinations Vac
@@ -99,7 +100,8 @@ order by 2,3
 With PopVsVac (continent, location, date, population, new_vaccinations, RollingPeopleVaccinated)
 as 
 (
-Select Death.continent, Death.location, Death.Date, Death.population, Vac.new_vaccinations, SUM(CONVERT(bigint, Vac.new_vaccinations)) OVER (Partition by death.location order by Death.location, Death.date) 
+Select Death.continent, Death.location, Death.Date, Death.population, Vac.new_vaccinations, 
+SUM(CONVERT(bigint, Vac.new_vaccinations)) OVER (Partition by death.location order by Death.location, Death.date) 
 as RollingPeopleVaccinated
 --, (RollingPeopleVaccinated/population)*100
 From PortfolioProject..CovidDeaths Death
@@ -123,7 +125,8 @@ New_Vaccinations numeric,
 RollingPeopleVaccinated numeric )
 
 Insert into #PercentPopulationVaccinated
-Select Death.continent, Death.location, Death.Date, Death.population, Vac.new_vaccinations, SUM(CONVERT(bigint, Vac.new_vaccinations)) OVER (Partition by death.location order by Death.location, Death.date) 
+Select Death.continent, Death.location, Death.Date, Death.population, Vac.new_vaccinations, 
+SUM(CONVERT(bigint, Vac.new_vaccinations)) OVER (Partition by death.location order by Death.location, Death.date) 
 as RollingPeopleVaccinated
 --, (RollingPeopleVaccinated/population)*100
 From PortfolioProject..CovidDeaths Death
@@ -142,7 +145,8 @@ from #PercentPopulationVaccinated
 --Percent of the Population Vaccinated
 CREATE VIEW PercentPopulationVaccinated as
 
-Select Death.continent, Death.location, Death.Date, Death.population, Vac.new_vaccinations, SUM(CONVERT(bigint, Vac.new_vaccinations)) OVER (Partition by death.location order by Death.location, Death.date) 
+Select Death.continent, Death.location, Death.Date, Death.population, Vac.new_vaccinations, 
+SUM(CONVERT(bigint, Vac.new_vaccinations)) OVER (Partition by death.location order by Death.location, Death.date) 
 as RollingPeopleVaccinated
 --, (RollingPeopleVaccinated/population)*100
 From PortfolioProject..CovidDeaths Death
